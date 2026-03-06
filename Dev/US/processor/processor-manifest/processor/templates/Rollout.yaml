@@ -1,0 +1,27 @@
+---
+# Source: processor/templates/Rollout.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: processor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: processor
+  workloadRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: processor
+    scaleDown: onsuccess
+  strategy:
+    canary:
+      canaryService: processor-canary
+      stableService: processor
+      steps:
+        - setWeight: 30
+        - pause: {}
+        - setWeight: 50
+        - pause: {}
+      maxUnavailable: 0
+      maxSurge: 1
