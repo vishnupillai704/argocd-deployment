@@ -2,10 +2,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: default
+  name: processor
   namespace: argocd
 spec:
-  project: default
+  project: workflow-project
   source:
     repoURL: https://github.com/vishnupillai704/argocd-deployment.git
     targetRevision: main
