@@ -5,7 +5,7 @@ metadata:
   name: processor
   namespace: argocd
 spec:
-  project: workflow-project
+  project: default
   source:
     repoURL: https://github.com/vishnupillai704/argocd-deployment.git
     targetRevision: main
