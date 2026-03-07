@@ -22,4 +22,5 @@ spec:
     jsonPointers:
     - /status
     - /spec/replicas
+    - /metadata/annotations
     

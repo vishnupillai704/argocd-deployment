@@ -53,6 +53,7 @@ spec:
       containers:
         - name: processor
           image: vishnu981824/app1
+          imagePullPolicy: IfNotPresent
   strategy:
     canary:
       canaryService: processor-canary
