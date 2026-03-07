@@ -16,8 +16,14 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: default
+  ignoreDifferences:
+  - group: argoproj.io
+    kind: Rollout
+    jsonPointers:
+    - /status
+    - /spec/replicas
   syncPolicy:
     automated:
       prune: true
-      selfHeal: true
+      selfHeal: false
     
