@@ -23,8 +23,6 @@ spec:
     - /status
     - /spec/replicas
   syncPolicy:
-    automated:
-      enabled: false
-      prune: true
+      prune: false
       selfHeal: false
     
