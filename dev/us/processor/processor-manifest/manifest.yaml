@@ -1,37 +1,36 @@
 ---
 # Source: processor/templates/service.yaml
-apiVersion: v1
-kind: Service
-metadata:
-  name: processor-canary
-  labels:
-    app: processor
-spec:
-  type: ClusterIP
-  ports:
-    - port: 9090
-      targetPort: 8080
-      protocol: TCP
-      name: http
-  selector:
-    app: processor
----
-# Source: processor/templates/service.yaml
-apiVersion: v1
-kind: Service
-metadata:
-  name: processor
-  labels:
-    app: processor
-spec:
-  type: ClusterIP
-  ports:
-    - port: 9090
-      targetPort: 8080
-      protocol: TCP
-      name: http
-  selector:
-    app: processor
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: processor-canary
+#   labels:
+#     app: processor
+# spec:
+#   type: ClusterIP
+#   ports:
+#     - port: 9090
+#       targetPort: 8080
+#       protocol: TCP
+#       name: http
+#   selector:
+#     app: processor
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: processor
+#   labels:
+#     app: processor
+# spec:
+#   type: ClusterIP
+#   ports:
+#     - port: 9090
+#       targetPort: 8080
+#       protocol: TCP
+#       name: http
+#   selector:
+#     app: processor
 ---
 # Source: processor/templates/Rollout.yaml
 apiVersion: argoproj.io/v1alpha1
@@ -56,8 +55,6 @@ spec:
           imagePullPolicy: IfNotPresent
   strategy:
     canary:
-      canaryService: processor-canary
-      stableService: processor
       steps:
         - setWeight: 30
         - pause: {}
