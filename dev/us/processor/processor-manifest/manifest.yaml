@@ -37,7 +37,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: processor
+  name: processor-deployment
   labels:
     app: processor
 spec:
@@ -75,10 +75,11 @@ spec:
   selector:
     matchLabels:
       app: processor
-  template:
-    metadata:
-      labels:
-        app: processor
+  workloadRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: processor-deployment
+    scaleDown: onsuccess
   strategy:
     canary:
       canaryService: processor-canary
