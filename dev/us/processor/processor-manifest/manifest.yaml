@@ -1,0 +1,99 @@
+---
+# Source: processor/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: processor-canary
+  labels:
+    app: processor
+spec:
+  type: ClusterIP
+  ports:
+    - port: 9090
+      targetPort: 8080
+      protocol: TCP
+      name: http
+  selector:
+    app: processor
+---
+# Source: processor/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: processor
+  labels:
+    app: processor
+spec:
+  type: ClusterIP
+  ports:
+    - port: 9090
+      targetPort: 8080
+      protocol: TCP
+      name: http
+  selector:
+    app: processor
+---
+# Source: processor/templates/Deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: processor
+  labels:
+    app: processor
+    namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: processor
+  strategy:
+    type: "RollingUpdate"
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: processor
+    spec:
+      containers:
+        - name: processor
+          image: vishnu981824/app1
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          resources:
+            requests:
+              memory: 100Mi
+              cpu: 100m
+            limits:
+              memory: 200Mi
+              cpu: 200m
+---
+# Source: processor/templates/Rollout.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: processor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: processor
+  workloadRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: processor
+    scaleDown: onsuccess
+  strategy:
+    canary:
+      canaryService: processor-canary
+      stableService: processor
+      steps:
+        - setWeight: 30
+        - pause: {}
+        - setWeight: 50
+        - pause: {}
+      maxUnavailable: 0
+      maxSurge: 1
