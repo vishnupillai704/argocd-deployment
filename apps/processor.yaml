@@ -22,7 +22,4 @@ spec:
     jsonPointers:
     - /status
     - /spec/replicas
-  syncPolicy:
-      prune: false
-      selfHeal: false
     
