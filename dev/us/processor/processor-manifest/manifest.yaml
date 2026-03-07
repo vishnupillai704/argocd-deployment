@@ -53,17 +53,6 @@ spec:
       containers:
         - name: processor
           image: vishnu981824/app1
-          ports:
-            - name: http
-              containerPort: 8080
-              protocol: TCP
-          resources:
-            requests:
-              memory: 100Mi
-              cpu: 100m
-            limits:
-              memory: 200Mi
-              cpu: 200mw
   strategy:
     canary:
       canaryService: processor-canary
