@@ -22,5 +22,6 @@ spec:
     jsonPointers:
     - /status
     - /spec/replicas
-    - /metadata/annotations
+    - /metadata/annotations/rollout.argoproj.io~1revision
+    - /metadata/annotations/kubectl.kubernetes.io~1last-applied-configuration
     
