@@ -40,7 +40,6 @@ metadata:
   name: processor
   labels:
     app: processor
-    namespace: default
 spec:
   replicas: 1
   selector:
@@ -76,11 +75,10 @@ spec:
   selector:
     matchLabels:
       app: processor
-  workloadRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: processor
-    scaleDown: onsuccess
+  template:
+    metadata:
+      labels:
+        app: processor
   strategy:
     canary:
       canaryService: processor-canary
