@@ -53,6 +53,7 @@ spec:
         - name: processor
           image: vishnu981824/app1
           imagePullPolicy: IfNotPresent
+          resources: {}
   strategy:
     canary:
       steps:
