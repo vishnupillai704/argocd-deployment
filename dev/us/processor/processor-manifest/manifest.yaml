@@ -1,36 +1,37 @@
 ---
 # Source: processor/templates/service.yaml
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: processor-canary
-#   labels:
-#     app: dummy
-# spec:
-#   type: ClusterIP
-#   ports:
-#     - port: 9090
-#       targetPort: 8080
-#       protocol: TCP
-#       name: http
-#   selector:
-#     app: dummy
-# ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: processor
-#   labels:
-#     app: dummy
-# spec:
-#   type: ClusterIP
-#   ports:
-#     - port: 9090
-#       targetPort: 8080
-#       protocol: TCP
-#       name: http
-#   selector:
-#     app: dummy
+apiVersion: v1
+kind: Service
+metadata:
+  name: processor-canary
+  labels:
+    app: dummy
+spec:
+  type: ClusterIP
+  ports:
+    - port: 9090
+      targetPort: 8080
+      protocol: TCP
+      name: http
+  selector:
+    app: dummy
+---
+# Source: processor/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: processor
+  labels:
+    app: dummy
+spec:
+  type: ClusterIP
+  ports:
+    - port: 9090
+      targetPort: 8080
+      protocol: TCP
+      name: http
+  selector:
+    app: dummy
 ---
 # Source: processor/templates/Rollout.yaml
 apiVersion: argoproj.io/v1alpha1
@@ -56,6 +57,8 @@ spec:
           resources: {}
   strategy:
     canary:
+      canaryService: processor-canary
+      stableService: processor
       steps:
         - setWeight: 30
         - pause: {}
