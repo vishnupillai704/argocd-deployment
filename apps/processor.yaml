@@ -12,7 +12,7 @@ spec:
     path: .
     directory:
       recurse: true
-      include: dev/us/processor/processor-manifest/*
+      include: dev/us/processor/processor-manifest/*    
   destination:
     server: https://kubernetes.default.svc
     namespace: default
