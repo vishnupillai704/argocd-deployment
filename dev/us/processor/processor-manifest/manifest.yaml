@@ -5,7 +5,7 @@ kind: Service
 metadata:
   name: processor-canary
   labels:
-    app: dummy
+    app: processor
 spec:
   type: ClusterIP
   ports:
@@ -14,7 +14,7 @@ spec:
       protocol: TCP
       name: http
   selector:
-    app: dummy
+    app: processor
 ---
 # Source: processor/templates/service.yaml
 apiVersion: v1
@@ -22,7 +22,7 @@ kind: Service
 metadata:
   name: processor
   labels:
-    app: dummy
+    app: processor
 spec:
   type: ClusterIP
   ports:
@@ -31,29 +31,29 @@ spec:
       protocol: TCP
       name: http
   selector:
-    app: dummy
+    app: processor
 ---
 # Source: processor/templates/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dummy
+  name: processor
   labels:
-    app: dummy
+    app: processor
 spec:
-  replicas: 1
+  replicas: 0
   selector:
     matchLabels:
-      app: dummy
+      app: processor
   template:
     metadata:
       labels:
-        app: dummy
+        app: processor
     spec: 
       terminationGracePeriodSeconds: 1
       containers:
-      - name: dummy
-        image: vishnu981824/app1
+      - name: processor
+        image: argoproj/rollouts-demo:red
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
@@ -67,18 +67,18 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: dummy
+  name: processor
   annotations:
     argocd.argoproj.io/compare-options: IgnoreExtraneous
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: dummy
+      app: processor
   workloadRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: dummy
+    name: processor
   strategy:
     canary:
       canaryService: processor-canary
