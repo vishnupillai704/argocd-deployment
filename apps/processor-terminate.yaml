@@ -1,0 +1,27 @@
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: processor-terminate
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/vishnupillai704/argocd-deployment.git
+    targetRevision: main
+    path: .
+    directory:
+      recurse: true
+      include: dev/us/processor-terminate/processor-terminate-manifest/*    
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  ignoreDifferences:
+  - group: argoproj.io
+    kind: Rollout
+    jsonPointers:
+    - /status
+    - /spec/replicas
+    - /metadata/annotations/rollout.argoproj.io~1revision
+    - /metadata/annotations/kubectl.kubernetes.io~1last-applied-configuration
+    

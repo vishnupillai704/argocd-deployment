@@ -1,0 +1,36 @@
+apiVersion: v1
+data:
+  dbpass.txt: ZHVtbXky
+kind: Secret
+metadata:
+  name: dbpass-44f65k952m
+type: Opaque
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: pre-procesor
+  name: pre-procesor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pre-procesor
+  template:
+    metadata:
+      labels:
+        app: pre-procesor
+    spec:
+      containers:
+      - image: argoproj/rollouts-demo:red
+        imagePullPolicy: Always
+        name: pre-procesor
+        ports:
+        - containerPort: 8080
+        resources:
+          limits:
+            cpu: 200m
+          requests:
+            cpu: 100m
+      terminationGracePeriodSeconds: 1
