@@ -1,9 +1,9 @@
 apiVersion: v1
 data:
-  dbpass.txt: ZHVtbXky
+  dbpass.txt: ZHVtbXk=
 kind: Secret
 metadata:
-  name: dbpass-44f65k952m
+  name: dbpass-hcb5775ktm
 type: Opaque
 ---
 apiVersion: apps/v1
@@ -23,7 +23,7 @@ spec:
         app: pre-procesor
     spec:
       containers:
-      - image: argoproj/rollouts-demo:red
+      - image: argoproj/rollouts-demo:blue
         imagePullPolicy: Always
         name: pre-procesor
         ports:
