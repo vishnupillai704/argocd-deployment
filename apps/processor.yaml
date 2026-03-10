@@ -16,6 +16,10 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: default
+  syncPolicy:
+    syncOptions:
+    - ApplyOutOfSyncOnly=true
+    - PruneLast=true
   ignoreDifferences:
   - group: argoproj.io
     kind: Rollout
