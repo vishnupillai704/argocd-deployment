@@ -53,7 +53,7 @@ spec:
       terminationGracePeriodSeconds: 1
       containers:
       - name: processor
-        image: argoproj/rollouts-demo:blue
+        image: processor:green
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
