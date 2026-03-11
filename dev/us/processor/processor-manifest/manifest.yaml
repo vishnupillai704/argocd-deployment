@@ -53,7 +53,7 @@ spec:
       terminationGracePeriodSeconds: 1
       containers:
       - name: processor
-        image: processor:green
+        image: vishnu981824/processor:green
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
